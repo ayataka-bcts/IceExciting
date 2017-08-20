@@ -1,4 +1,4 @@
-﻿
+﻿using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,32 +8,41 @@ public class BluetoothClient : MonoBehaviour
     static AndroidJavaObject btClient;
     string selectedDevice;
 
+	Dropdown dd;
+	BluetoothManager bm;
+
     // Use this for initialization
     void Start()
     {
-        init();
+		dd = GameObject.Find ("DeviceList").GetComponent <Dropdown> ();
     }
+
+	// Bluetoothデバイスのリストを取得してドロップダウンメニューに表示する
+	void ShowDeviceList(){
+
+		//BluetoothデバイスのリストをCSV形式で取得
+		string devListCsv = btClient.Call<string>("getDeviceList");
+		Debug.Log (devListCsv);
+
+		//csv分割
+		string[] devList = devListCsv.Split(',');
+
+		// 取得したデータをDropdownメニューに格納
+		foreach(string item in devList){
+			Dropdown.OptionData od = new Dropdown.OptionData();
+			od.text = item;
+			dd.options.Add (od);
+		}
+	}
 
     private void init()
     {
         //プラグイン取得、受信時のコールバック関数設定
         btClient = new AndroidJavaObject("com.example.somen.androidbtspp_split.btspp", this.gameObject.name, "received", "client");
 
-        //if (selectedDevice == null)
-        //{
-            //BluetoothデバイスのリストをCSV形式で取得
-            string devListCsv = btClient.Call<string>("getDeviceList");
-            Debug.Log(devListCsv);
+		ShowDeviceList ();
 
-            //csv分割
-            string[] devList = devListCsv.Split(',');
-
-            //ここでユーザに選択画面を出す
-            selectedDevice = devList[0];//仮実装。とりあえずリストの先頭のものを選択
-        //}
-
-        //サーバデバイスと接続
-        btClient.Call("runAsClient", selectedDevice);//サーバのデバイスを指定して接続
+		BluetoothManager.Client_or_Server = "Client";
     }
 
     private void Update()

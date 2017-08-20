@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager_solo : MonoBehaviour {
 
@@ -43,6 +44,15 @@ public class GameManager_solo : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		SetValue ();
+
+		Dropdown dp = GameObject.Find ("DeviceList").GetComponent <Dropdown> ();
+		Dropdown.OptionData od = new Dropdown.OptionData();
+		od.text = "test";
+		Debug.Log ("1:" + dp);
+
+		dp.options[1] = od;
+
+		Debug.Log ("2:" + dp);
 
 	}
 	

@@ -49,6 +49,8 @@
      <Compile Include="Assets\AndroidBluetooth\Scripts\BluetoothClient.cs" />
      <Compile Include="Assets\AndroidBluetooth\Scripts\BluetoothServer.cs" />
      <Compile Include="Assets\AndroidBluetooth\Scripts\DebugWindow.cs" />
+     <Compile Include="Assets\Resources\Scripts\BluetoothManager.cs" />
+     <Compile Include="Assets\Resources\Scripts\SceneTrans_mode.cs" />
      <Compile Include="Assets\Resources\Scripts\Solo\DebugManager.cs" />
      <Compile Include="Assets\Resources\Scripts\Solo\GameManager_solo.cs" />
      <Compile Include="Assets\Resources\Scripts\mode_select.cs" />
