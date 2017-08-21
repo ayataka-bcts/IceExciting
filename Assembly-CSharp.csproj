@@ -47,12 +47,14 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\AndroidBluetooth\Scripts\BluetoothClient.cs" />
+     <Compile Include="Assets\AndroidBluetooth\Scripts\BluetoothDevice.cs" />
      <Compile Include="Assets\AndroidBluetooth\Scripts\BluetoothServer.cs" />
      <Compile Include="Assets\AndroidBluetooth\Scripts\DebugWindow.cs" />
      <Compile Include="Assets\Resources\Scripts\BluetoothManager.cs" />
      <Compile Include="Assets\Resources\Scripts\SceneTrans_mode.cs" />
      <Compile Include="Assets\Resources\Scripts\Solo\DebugManager.cs" />
      <Compile Include="Assets\Resources\Scripts\Solo\GameManager_solo.cs" />
+     <Compile Include="Assets\Resources\Scripts\VersusManager.cs" />
      <Compile Include="Assets\Resources\Scripts\mode_select.cs" />
      <Compile Include="Assets\Resources\Scripts\solo_managaer.cs" />
      <Compile Include="Assets\Resources\Scripts\title.cs" />

@@ -11,7 +11,7 @@ public class title : MonoBehaviour {
 	IEnumerator TransitionTitle(){
 
 		// シーン遷移のトリガーセット
-		am.Play ("transition");
+		am.SetTrigger ("trans");
 
 		// アニメーション終了待ち
 		yield return new WaitForSeconds (1.5f);
