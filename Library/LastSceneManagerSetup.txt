@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 sceneSetups:
-- path: Assets/Resources/Scenes/versus.unity
+- path: Assets/Resources/Scenes/Versus_setting.unity
   isLoaded: 1
   isActive: 1
-=======
-sceneSetups: []
->>>>>>> compile-error

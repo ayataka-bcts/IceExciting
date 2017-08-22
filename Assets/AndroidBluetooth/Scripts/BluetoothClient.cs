@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 ﻿using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,14 +9,16 @@ public class BluetoothClient : MonoBehaviour
     static AndroidJavaObject btClient;
     string selectedDevice;
 
-	Dropdown dd;
-	BluetoothManager bm;
+	public Dropdown dd;
 	public Text debug_text;
+	public Text debug_status;
+
+	public GameObject device_list;
+	public GameObject connect_button_client;
 
     // Use this for initialization
     void Start()
     {
-		dd = GameObject.Find ("DeviceList").GetComponent <Dropdown> ();
     }
 
 	// Bluetoothデバイスのリストを取得してドロップダウンメニューに表示する
@@ -24,11 +26,9 @@ public class BluetoothClient : MonoBehaviour
 
 		//BluetoothデバイスのリストをCSV形式で取得
 		string devListCsv = btClient.Call<string>("getDeviceList");
-		debug_text.text = devListCsv.ToString ();
 
 		//csv分割
 		string[] devList = devListCsv.Split(',');
-
 
 		// 取得したデータをDropdownメニューに格納
 		foreach(string item in devList){
@@ -38,26 +38,51 @@ public class BluetoothClient : MonoBehaviour
 		}
 	}
 
-    private void init()
+    public void init()
     {
-        //プラグイン取得、受信時のコールバック関数設定
-        btClient = new AndroidJavaObject("com.example.somen.androidbtspp_split.btspp", this.gameObject.name, "received", "client");
+		//プラグイン取得、受信時のコールバック関数設定
+		btClient = new AndroidJavaObject("com.example.somen.androidbtspp_split.btspp", this.gameObject.name, "received", "client");
+
+		//BluetoothManager.Client_or_Server = "Client";
+		debug_status.text = "Client";
+
+		// connectボタン、ドロップダウンメニューの表示
+		connect_button_client.SetActive (true);
+		device_list.SetActive (true);
 
 		ShowDeviceList ();
 
-		BluetoothManager.Client_or_Server = "Client";
+		selectedDevice = dd.captionText.text;
+
+		debug_text.text = selectedDevice.ToString ();
+
+		btClient.Call ("runAsClient", selectedDevice);
+
     }
+
+	// サーバかクライエントかどちらかを指定して接続
+	public void Connecting(){
+
+		selectedDevice = dd.captionText.ToString ();
+
+		btClient.Call ("runAsClient", selectedDevice);
+	}
 
     private void Update()
     {
         //サーバにメッセージ送信
-        string sendMessage = "getAccel";
-        if(btClient!=null)btClient.Call("send", sendMessage);
+        string sendMessage = "client_ok";
+
+        if(btClient!=null)
+			btClient.Call("send", sendMessage);
     }
 
     //コールバック
     void received(string message)
     {
+		if(message == "server_ok")
+			debug_text.text = "ok";
+
         //csv分割
         string[] splitted = message.Split(',');
         Debug.Log("received:" + message);
@@ -69,11 +94,11 @@ public class BluetoothClient : MonoBehaviour
     {
         if (pauseStatus)
         {
-            btClient.Call("pause");
+            //btClient.Call("pause");
         }
         else
         {
-            init();
+            //init();
         }
     }
 }
@@ -125,78 +150,78 @@ public class BluetoothClient : MonoBehaviour
  * 引数1　待機時間（ms）
  * 
 ----------------*/
-=======
-﻿
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class BluetoothClient : MonoBehaviour
-{
-    //privateにしました。
-    private static AndroidJavaObject btClient;
-    private string selectedDevice;
-
-    private static int counter = 0;
-   
-
-    // Use this for initialization
-    void Start()
-    {
-        init();
-    }
-
-    private void init()
-    {
-        //プラグイン取得、受信時のコールバック関数設定
-        btClient = new AndroidJavaObject("com.example.somen.androidbtspp_split.btspp", this.gameObject.name, "received", "client");
-
-        //if (selectedDevice == null)
-        //{
-            //BluetoothデバイスのリストをCSV形式で取得
-            string devListCsv = btClient.Call<string>("getDeviceList");
-            Debug.Log(devListCsv);
-
-            //csv分割
-            string[] devList = devListCsv.Split(',');
-
-            //ここでユーザに選択画面を出す
-            selectedDevice = devList[0];//仮実装。とりあえずリストの先頭のものを選択
-        //}
-
-        //サーバデバイスと接続
-        btClient.Call("runAsClient", selectedDevice);//サーバのデバイスを指定して接続
-    }
-
-    private void Update()
-    {
-        //サーバにメッセージ送信
-        string sendMessage = "getAccel";
-        if(btClient!=null && ++counter%30==0)btClient.Call("send", sendMessage);
-    }
-
-    //コールバック
-    void received(string message)
-    {
-        //csv分割
-        string[] splitted = message.Split(',');
-        Debug.Log("received:" + message);
-        Debug.Log("splitted[0]:" + splitted[0]);
-    }
-
-    //アプリポーズ時の処理呼び出し
-    void OnApplicationPause(bool pauseStatus)
-    {
-        if (pauseStatus)
-        {
-            btClient.Call("pause");
-        }
-        else
-        {
-            init();
-        }
-    }
-}
+//=======
+//﻿
+//using System.Collections;
+//using System.Collections.Generic;
+//using UnityEngine;
+//
+//public class BluetoothClient : MonoBehaviour
+//{
+//    //privateにしました。
+//    private static AndroidJavaObject btClient;
+//    private string selectedDevice;
+//
+//    private static int counter = 0;
+//   
+//
+//    // Use this for initialization
+//    void Start()
+//    {
+//        init();
+//    }
+//
+//    private void init()
+//    {
+//        //プラグイン取得、受信時のコールバック関数設定
+//        btClient = new AndroidJavaObject("com.example.somen.androidbtspp_split.btspp", this.gameObject.name, "received", "client");
+//
+//        //if (selectedDevice == null)
+//        //{
+//            //BluetoothデバイスのリストをCSV形式で取得
+//            string devListCsv = btClient.Call<string>("getDeviceList");
+//            Debug.Log(devListCsv);
+//
+//            //csv分割
+//            string[] devList = devListCsv.Split(',');
+//
+//            //ここでユーザに選択画面を出す
+//            selectedDevice = devList[0];//仮実装。とりあえずリストの先頭のものを選択
+//        //}
+//
+//        //サーバデバイスと接続
+//        btClient.Call("runAsClient", selectedDevice);//サーバのデバイスを指定して接続
+//    }
+//
+//    private void Update()
+//    {
+//        //サーバにメッセージ送信
+//        string sendMessage = "getAccel";
+//        if(btClient!=null && ++counter%30==0)btClient.Call("send", sendMessage);
+//    }
+//
+//    //コールバック
+//    void received(string message)
+//    {
+//        //csv分割
+//        string[] splitted = message.Split(',');
+//        Debug.Log("received:" + message);
+//        Debug.Log("splitted[0]:" + splitted[0]);
+//    }
+//
+//    //アプリポーズ時の処理呼び出し
+//    void OnApplicationPause(bool pauseStatus)
+//    {
+//        if (pauseStatus)
+//        {
+//            btClient.Call("pause");
+//        }
+//        else
+//        {
+//            init();
+//        }
+//    }
+//}
 
 /*--
  * PlayerSettingsで、Minimum API Levelを4.4 KitKat (API level 19)にしてください。
@@ -245,4 +270,3 @@ public class BluetoothClient : MonoBehaviour
  * 引数1　待機時間（ms）
  * 
 ----------------*/
->>>>>>> compile-error

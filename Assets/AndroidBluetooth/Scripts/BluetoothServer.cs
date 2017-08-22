@@ -9,56 +9,42 @@ public class BluetoothServer : MonoBehaviour
 	static AndroidJavaObject btServer;
 	string selectedDevice;
 
-	Dropdown dd;
-	BluetoothManager bm;
 	public Text debug_text;
+	public Text debug_status;
+
+	public GameObject connect_button_server;
 
 	// Use this for initialization
 	void Start()
 	{
-		dd = GameObject.Find ("DeviceList").GetComponent <Dropdown> ();
 	}
 
-	// Bluetoothデバイスのリストを取得してドロップダウンメニューに表示する
-	void ShowDeviceList(){
-
-		//BluetoothデバイスのリストをCSV形式で取得
-		string devListCsv = btServer.Call<string>("getDeviceList");
-		Debug.Log (devListCsv);
-
-		//csv分割
-		string[] devList = devListCsv.Split(',');
-
-		// 取得したデータをDropdownメニューに格納
-		foreach(string item in devList){
-			Dropdown.OptionData od = new Dropdown.OptionData();
-			od.text = item;
-			dd.options.Add (od);
-		}
-	}
-
-	private void init()
+	public void init()
 	{
 		//プラグイン取得、受信時のコールバック関数設定
 		btServer = new AndroidJavaObject("com.example.somen.androidbtspp_split.btspp", this.gameObject.name, "received", "server");
 
-		ShowDeviceList ();
+		debug_status.text = "Server";
 
-		BluetoothManager.Client_or_Server = "Server";
+		connect_button_server.SetActive (true);
+
+		btServer.Call ("runAsServer");
 	}
 
+	// サーバかクライエントかどちらかを指定して接続
+	public void Connecting(){
+
+		btServer.Call ("runAsServer");
+	}
 
     //コールバック
     void received(string message)
     {
-        Debug.Log("received:" + message);
+		if (message == "client_ok") {
+			debug_text.text = "ok";
 
-        //受信メッセージが"getAccel"なら加速度を返す（仮実装なのでなんとでも変えてください）
-        if (message == "getAccel")
-        {
-            string sendMessage = "120,113,134";
-            btServer.Call("send", sendMessage);
-        }
+			btServer.Call ("send", "server_ok");
+		}
     }
 
     //アプリポーズ時の処理呼び出し
@@ -66,11 +52,11 @@ public class BluetoothServer : MonoBehaviour
     {
         if (pauseStatus)
         {
-            btServer.Call("pause");
+            //btServer.Call("pause");
         }
         else
         {
-            init();
+            //init();
         }
     }
 }
