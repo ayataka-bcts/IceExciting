@@ -10,6 +10,7 @@ public class BluetoothClient : MonoBehaviour
 
 	Dropdown dd;
 	BluetoothManager bm;
+	public Text debug_text;
 
     // Use this for initialization
     void Start()
@@ -22,10 +23,11 @@ public class BluetoothClient : MonoBehaviour
 
 		//BluetoothデバイスのリストをCSV形式で取得
 		string devListCsv = btClient.Call<string>("getDeviceList");
-		Debug.Log (devListCsv);
+		debug_text.text = devListCsv.ToString ();
 
 		//csv分割
 		string[] devList = devListCsv.Split(',');
+
 
 		// 取得したデータをDropdownメニューに格納
 		foreach(string item in devList){

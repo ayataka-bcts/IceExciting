@@ -1,12 +1,12 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/AndroidBluetooth/Scripts/BluetoothServer.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/AndroidBluetooth/Scripts/BluetoothClient.cs">
     <Files>
-      <File FileName="Assets/AndroidBluetooth/Scripts/BluetoothServer.cs" Line="124" Column="3" />
-      <File FileName="Assets/AndroidBluetooth/Scripts/BluetoothClient.cs" Line="125" Column="1" />
-      <File FileName="Assets/Resources/Scripts/BluetoothManager.cs" Line="2" Column="34" />
+      <File FileName="Assets/AndroidBluetooth/Scripts/BluetoothServer.cs" Line="14" Column="2" />
+      <File FileName="Assets/AndroidBluetooth/Scripts/BluetoothClient.cs" Line="14" Column="2" />
+      <File FileName="Assets/Resources/Scripts/BluetoothManager.cs" Line="1" Column="1" />
       <File FileName="Assets/Resources/Scripts/solo_managaer.cs" Line="1" Column="1" />
-      <File FileName="Assets/Resources/Scripts/Solo/GameManager_solo.cs" Line="55" Column="23" />
+      <File FileName="Assets/Resources/Scripts/Solo/GameManager_solo.cs" Line="1" Column="1" />
       <File FileName="Assets/Resources/Scripts/Solo/DebugManager.cs" Line="1" Column="1" />
       <File FileName="Assets/Resources/Scripts/title.cs" Line="1" Column="1" />
       <File FileName="Assets/Resources/Scripts/mode_select.cs" Line="1" Column="1" />

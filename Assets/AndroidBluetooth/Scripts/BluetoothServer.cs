@@ -11,6 +11,7 @@ public class BluetoothServer : MonoBehaviour
 
 	Dropdown dd;
 	BluetoothManager bm;
+	public Text debug_text;
 
 	// Use this for initialization
 	void Start()
