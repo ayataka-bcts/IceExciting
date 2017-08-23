@@ -9,8 +9,6 @@ public class BluetoothManager: MonoBehaviour
 	static AndroidJavaObject btClient;
 	static AndroidJavaObject btServer;
 
-	Server_or_Client _soc;
-
 	public Text tx;
 	public Text tx2;
 
