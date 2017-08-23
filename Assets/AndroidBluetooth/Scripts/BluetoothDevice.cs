@@ -2,12 +2,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BluetoothDevice : MonoBehaviour
 {
     //privateにしました。
-    private static AndroidJavaObject btClient;
+    private static AndroidJavaObject btDevice;
     //private string selectedDevice;
+
+	public Text tex;
 
     // Use this for initialization
     void Start()
@@ -18,7 +21,7 @@ public class BluetoothDevice : MonoBehaviour
     private void init()
     {
         //プラグイン取得、受信時のコールバック関数設定
-        btClient = new AndroidJavaObject("com.example.somen.androidbtspp_split.btspp", this.gameObject.name, "receivedFromDevice", "client");
+        btDevice = new AndroidJavaObject("com.example.somen.androidbtspp_split.btspp", this.gameObject.name, "receivedFromDevice", "client");
 
         ////BluetoothデバイスのリストをCSV形式で取得
         //string devListCsv = btClient.Call<string>("getDeviceList");
@@ -31,10 +34,10 @@ public class BluetoothDevice : MonoBehaviour
         //selectedDevice = devList[0];//仮実装。とりあえずリストの先頭のものを選択
 
         //【NEW!!】UUIDの変更
-        btClient.Call("setBtUuid", "00001101-0000-1000-8000-00805F9B34FB");//UUIDを、デバイスで設定したものと共通のものに変更
+        btDevice.Call("setBtUuid", "00001101-0000-1000-8000-00805F9B34FB");//UUIDを、デバイスで設定したものと共通のものに変更
 
         //【EDITED!!】サーバデバイスと接続
-        btClient.Call("runAsClient", "BTstack SPP Counter");//サーバのデバイスを指定して接続
+        btDevice.Call("runAsClient", "BTstack SPP MPU6050");//サーバのデバイスを指定して接続
     }
 
     private void Update()
@@ -47,6 +50,7 @@ public class BluetoothDevice : MonoBehaviour
     //コールバック
     void receivedFromDevice(string message)
     {
+		tex.text = message;
         ////csv分割
         //string[] splitted = message.Split(',');
         Debug.Log("received:" + message);
@@ -58,7 +62,7 @@ public class BluetoothDevice : MonoBehaviour
     {
         if (pauseStatus)
         {
-            btClient.Call("pause");
+            btDevice.Call("pause");
         }
         else
         {

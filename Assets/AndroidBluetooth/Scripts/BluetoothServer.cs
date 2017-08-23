@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class BluetoothServer : MonoBehaviour
 {
 
-	static AndroidJavaObject btServer;
+	//AndroidJavaObject btServer;
 	string selectedDevice;
 
 	public Text debug_text;
@@ -22,29 +23,27 @@ public class BluetoothServer : MonoBehaviour
 	public void init()
 	{
 		//プラグイン取得、受信時のコールバック関数設定
-		btServer = new AndroidJavaObject("com.example.somen.androidbtspp_split.btspp", this.gameObject.name, "received", "server");
+		//btServe= new AndroidJavaObject("com.example.somen.androidbtspp_split.btspp", this.gameObject.name, "received", "server");
 
+		//サーバとクライアントどちらかをセット
 		debug_status.text = "Server";
 
-		connect_button_server.SetActive (true);
+		// セッティングシーンならボタンを表示する
+		if(SceneManager.GetActiveScene ().name == "Versus_setting")
+			connect_button_server.SetActive (true);
 
-		btServer.Call ("runAsServer");
+		//btServer.Call ("runAsServer");
 	}
 
-	// サーバかクライエントかどちらかを指定して接続
+	// セット完了として次のシーンへ
 	public void Connecting(){
 
-		btServer.Call ("runAsServer");
+		SceneManager.LoadScene ("versus");
 	}
 
     //コールバック
     void received(string message)
     {
-		if (message == "client_ok") {
-			debug_text.text = "ok";
-
-			btServer.Call ("send", "server_ok");
-		}
     }
 
     //アプリポーズ時の処理呼び出し

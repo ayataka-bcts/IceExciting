@@ -1,4 +1,4 @@
-
+using UnityEngine.SceneManagement;
 ﻿using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,8 +6,9 @@ using UnityEngine;
 
 public class BluetoothClient : MonoBehaviour
 {
-    static AndroidJavaObject btClient;
-    string selectedDevice;
+    AndroidJavaObject btClient;
+
+	string selectedDevice;
 
 	public Dropdown dd;
 	public Text debug_text;
@@ -19,6 +20,7 @@ public class BluetoothClient : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+
     }
 
 	// Bluetoothデバイスのリストを取得してドロップダウンメニューに表示する
@@ -43,50 +45,40 @@ public class BluetoothClient : MonoBehaviour
 		//プラグイン取得、受信時のコールバック関数設定
 		btClient = new AndroidJavaObject("com.example.somen.androidbtspp_split.btspp", this.gameObject.name, "received", "client");
 
-		//BluetoothManager.Client_or_Server = "Client";
+		//サーバとクライアントどちらかをセット
 		debug_status.text = "Client";
 
-		// connectボタン、ドロップダウンメニューの表示
-		connect_button_client.SetActive (true);
-		device_list.SetActive (true);
+		// セッティングシーンならボタンを表示する
+		if (SceneManager.GetActiveScene ().name == "Versus_setting") {
+			// connectボタン、ドロップダウンメニューの表示
+			connect_button_client.SetActive (true);
+			device_list.SetActive (true);
+		}
 
+		// ペアリングしたことあるデバイスを表示
 		ShowDeviceList ();
 
-		selectedDevice = dd.captionText.text;
+		// 現在のドロップダウンの項目を選択
+		//selectedDevice = dd.captionText.text;
 
-		debug_text.text = selectedDevice.ToString ();
+		// 接続開始
+		//btClient.Call ("runAsClient", selectedDevice);
 
-		btClient.Call ("runAsClient", selectedDevice);
+		btClient.Dispose ();
 
     }
 
-	// サーバかクライエントかどちらかを指定して接続
 	public void Connecting(){
-
-		selectedDevice = dd.captionText.ToString ();
-
-		btClient.Call ("runAsClient", selectedDevice);
+		SceneManager.LoadScene ("versus");
 	}
 
     private void Update()
-    {
-        //サーバにメッセージ送信
-        string sendMessage = "client_ok";
-
-        if(btClient!=null)
-			btClient.Call("send", sendMessage);
+	{
     }
 
     //コールバック
     void received(string message)
     {
-		if(message == "server_ok")
-			debug_text.text = "ok";
-
-        //csv分割
-        string[] splitted = message.Split(',');
-        Debug.Log("received:" + message);
-        Debug.Log("splitted[0]:" + splitted[0]);
     }
 
     //アプリポーズ時の処理呼び出し
