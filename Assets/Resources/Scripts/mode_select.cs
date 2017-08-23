@@ -20,5 +20,12 @@ public class mode_select : MonoBehaviour {
 
 	public void SelectMode(string mode){
 		SceneManager.LoadScene (mode);
+		if (mode == "Ranking") {
+			
+			// ランキング情報の取得
+			Ranking1Manager.Instance.FetchRanking();
+			// テキスト形式にして取得
+			Ranking1Manager.Instance.GetRanking1ByText();
+		}
 	}
 }
