@@ -24,12 +24,6 @@ public class DebugManager : MonoBehaviour {
 	private bool _IsPerform = false;
 	private bool _IsTasting = false;
 
-	// デバッグ用変数
-	private Text debug_target;
-	private Text debug_axis;
-	private Text debug_p_time;
-	private Text debug_t_time;
-
 	// 乱数をある程度綺麗な数値に整える
 	int RangeValueMapping(int value){
 
@@ -93,10 +87,6 @@ public class DebugManager : MonoBehaviour {
 
 	// デバッグ用変数の初期化
 	void DebugSetUp(){
-		debug_target = GameObject.Find ("Debug/Target").GetComponent <Text> ();
-		debug_axis	 = GameObject.Find ("Debug/Axis").GetComponent <Text> ();
-		debug_p_time = GameObject.Find ("Debug/perform_time").GetComponent <Text> ();
-		debug_t_time = GameObject.Find ("Debug/tasting_time").GetComponent <Text> ();
 	}
 
 	// かかった時間に応じたテイスティングタイムの算出

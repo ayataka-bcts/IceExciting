@@ -148,11 +148,11 @@ public class Ranking1Manager : MonoBehaviour
                 //さっき保存したスコアがあった場合は赤に着色する//
                 if (rankingData.objectid == currentObjectid)
                 {
-                    text += "<color=red>" + rankNum + ": \t" + name + ": \t" + score + "</color> \n";
+                    text += "<color=red>" + rankNum + "," + name + "," + score + "</color>";
                 }
                 else
                 {
-                    text += rankNum + ": \t" + name + ": \t" + score + "\n";
+                    text += rankNum + "," + name + "," + score + ",";
                 }
             }
 
