@@ -18,6 +18,7 @@ public class BluetoothServer : MonoBehaviour
 	// Use this for initialization
 	void Start()
 	{
+		connect_button_server.SetActive (false);
 	}
 
 	public void init()

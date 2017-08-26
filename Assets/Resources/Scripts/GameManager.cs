@@ -1,21 +1,45 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 
 	// 加速度センサの値(仮想)
-	public float axis_x;
-	public float axis_y;
-	public float axis_z;
+	private int _sensor1;
+	private int _sensor2;
+
+	// 判定の時に過去いくつかの数値を使用する
+	private int[] _sensor;
+	private int count;
+
+	// ランダムに生成する角度(指定の角度)
+	private int angle;
+
+	// 勝者と敗者(serverかclientで判断。次のシーンで使う)
+	public static string winner;
+	public static string loser;
 
 	// 今どちらの状態かを判断する変数
-	string atack_or_defence;
+	public static string atack_or_defence;
 
-	// デバイスとBluetoothで接続する
-	void ConnectDevice(){
-		
-	}
+	// 攻守交代のトリガー
+	public static bool change_trigger;
+
+	public static bool end_atack;
+
+	// 振動発生のトリガー
+	public static bool vib_trigger;
+
+	// ゲーム終了の合図
+	public static bool end_game;
+
+	// カットイン用のオブジェクト
+	public GameObject cutin;
+
+	public Text tx3;
+	public Text tx4;
 
 	// 乱数をある程度綺麗な数値に整える
 	int RangeValueMapping(int value){
@@ -33,20 +57,18 @@ public class GameManager : MonoBehaviour {
 				value = 75;
 			} else if (75 < value && value < 90) {
 				value = 90;
-			}
-		} else if (value < 0) {
-			if (-90 < value && value < -75) {
-				value = -90;
-			} else if (-75 < value && value < -60) {
-				value = -75;
-			} else if (-60 < value && value < -45) {
-				value = -60;
-			} else if (-45 < value && value < -30) {
-				value = -45;
-			} else if (-30 < value && value < -15) {
-				value = -30;
-			} else if (-15 < value && value < 0) {
-				value = 0;
+			} else if (90 < value && value < 105) {
+				value = 105;
+			} else if (105 < value && value < 120) {
+				value = 120;
+			} else if (120 < value && value < 135) {
+				value = 135;
+			} else if (135 < value && value < 150) {
+				value = 150;
+			} else if (150 < value && value < 165) {
+				value = 165;
+			} else if (165 < value && value < 180) {
+				value = 175;
 			}
 		}
 
@@ -59,7 +81,7 @@ public class GameManager : MonoBehaviour {
 
 		// -90度から90度までの間で乱数発生
 		// [Todo]綺麗な数値の乱数を作れる関数あるかも
-		int rnd = Random.Range (-90, 90);
+		int rnd = Random.Range (0, 180);
 
 		// 適度な数値にマッピングし直す
 		int angle = RangeValueMapping (rnd);
@@ -68,51 +90,133 @@ public class GameManager : MonoBehaviour {
 	}
 
 	// 角度の判定(引数：センサ値、指定の角度)
-	bool CheckAngle(int sensor, int target){
+	bool CheckAngle(int[] sensor, int target){
 
 		// [要調整]いくつかの誤差を許容してもいいかも
-		if (sensor == target) {
+		if (sensor[0] == target && sensor[1] == target && sensor[2] == target && sensor[3] == target && sensor[4] == target) {
 			return true;
 		} else {
 			return false;
 		}
 	}
 
-	// 受信したメッセージを整える
-	void ReceiveMessage(string message){
-		//おそらくカンマ区切りのstringで送られてくるので
-		message.Split (',');
+	// ゲームが終了した時に押されるボタン(勝者が押す感じかな)
+	public void EndGame(){
+
+		winner = Server_or_Client.role;
+
+		if (winner == "client") {
+			loser = "server";
+		} else if (winner == "server") {
+			loser = "client";
+		}
+
+		end_game = true;
+		SceneManager.LoadScene ("result");
+	}
+
+	// 攻守交代のときのアニメーション再生
+	IEnumerator ChangeAnimation(){
+
+		// カットインオブジェクトをアクティブ
+		cutin.SetActive (true);
+
+		// カットインのアニメーション再生
+		cutin.GetComponent <Animator> ().SetTrigger ("cutin");
+
+		yield return new WaitForSeconds(2.0f); 
+
+		// カットインオブジェクトを非アクティブに
+		cutin.SetActive (false);
+
+	}
+
+	// デバイスからのメッセージを分解してintに格納
+	void GetAccele(string str){
+
+		string[] receive = str.Split (',');
+
+		_sensor1 = Mathf.FloorToInt (float.Parse(receive [0]));
+		_sensor2 = Mathf.FloorToInt (float.Parse(receive [1]));
+
+		_sensor [count % 5] = _sensor2;
+		count++;
+
+	}
+
+	public void debugchange()
+	{
+		StartCoroutine (ChangeAnimation ());
+		change_trigger = true;
 	}
 
 	// Use this for initialization
 	void Start () {
-		
+
+		// 変数の初期化
+		angle = 0;
+		end_game = false;
+		change_trigger = false;
+		end_atack = false;
+		cutin.SetActive (false);
+		_sensor = new int[5];
+		count = 0;
+		vib_trigger = false;
+
+		// サーバかクライエントで先行後攻を決定
+		if (Server_or_Client.role == "server") {
+			atack_or_defence = "atack";
+		} else if (Server_or_Client.role == "client") {
+			atack_or_defence = "defence";
+		}
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
+
+		tx3.text = "1:" + _sensor1.ToString () + " 2:" + _sensor2.ToString ();
+		tx4.text = atack_or_defence;
+
 		// アイスを食べる側のとき
 		if (atack_or_defence == "atack") {
 
+			angle = 0;
+
 			// 攻守交代
-			atack_or_defence = "defence";
+			if (end_atack == true) {
+				// 順次実行で処理して欲しいのでコルーチンを使用
+				StartCoroutine (ChangeAnimation ());
+				change_trigger = true;
+			}
 		}
 		// アイスを傾ける側のとき
 		else if (atack_or_defence == "defence") {
 			
 			// 指定の角度を生成
-			int angle = GenerateTargetAngle ();
-
-			// 加速度計の値を取得(未実装)
-
-			// 値の判定
-			if(CheckAngle (int.Parse(axis_x.ToString()), angle)){
-
+			if(angle == 0){
+				angle = GenerateTargetAngle ();
+				GameObject.Find ("debug_2").GetComponent <Text> ().text = "angle:" + angle.ToString ();
 			}
 
-			// 攻守交代
-			atack_or_defence = "atack";
+			// 加速度計の値を取得
+			GetAccele (BluetoothManager._fromDevice);
+
+			// 値の判定
+			if(CheckAngle (_sensor, angle)){
+				
+				// 順次実行で処理して欲しいのでコルーチンを使用
+				StartCoroutine (ChangeAnimation ());
+				change_trigger = true;
+			}
+
 		}
+
+		// 通信によってゲームの終了を知ったら
+		if (BluetoothManager.end_ok == true) {
+			SceneManager.LoadScene ("result");
+			loser = Server_or_Client.role;
+		}
+			
 	}
 }

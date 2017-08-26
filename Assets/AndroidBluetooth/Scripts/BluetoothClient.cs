@@ -20,7 +20,8 @@ public class BluetoothClient : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
+		device_list.SetActive (false);
+		connect_button_client.SetActive (false);
     }
 
 	// Bluetoothデバイスのリストを取得してドロップダウンメニューに表示する

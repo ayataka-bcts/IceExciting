@@ -13,6 +13,8 @@ public class RankingManager : MonoBehaviour {
 	[SerializeField]
 	private Text[] ranking_score;
 
+	public Animator am;
+
 	void DisplayRanking(string[] data){
 
 		// 各データの配列に格納する
@@ -23,9 +25,21 @@ public class RankingManager : MonoBehaviour {
 
 	}
 
+	IEnumerator TransitionRanking(){
+
+		// シーン遷移のトリガーセット
+		am.SetTrigger ("trans");
+
+		// アニメーション終了待ち
+		yield return new WaitForSeconds (1.5f);
+
+		// シーンロード
+		SceneManager.LoadScene ("mode_select");
+	}
+
 	// 戻るボタンを押した時の処理
 	public void BackButton(){
-		SceneManager.LoadScene ("mode_select");
+		StartCoroutine (TransitionRanking ());
 	}
 
 	// Use this for initialization

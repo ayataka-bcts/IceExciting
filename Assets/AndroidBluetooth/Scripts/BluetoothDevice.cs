@@ -37,7 +37,7 @@ public class BluetoothDevice : MonoBehaviour
         btDevice.Call("setBtUuid", "00001101-0000-1000-8000-00805F9B34FB");//UUIDを、デバイスで設定したものと共通のものに変更
 
         //【EDITED!!】サーバデバイスと接続
-        btDevice.Call("runAsClient", "BTstack SPP Counter");//サーバのデバイスを指定して接続
+        btDevice.Call("runAsClient", "ICE EXCITING!");//サーバのデバイスを指定して接続
     }
 
     private void Update()
