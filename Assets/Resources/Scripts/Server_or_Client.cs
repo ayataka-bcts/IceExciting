@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Server_or_Client : MonoBehaviour {
 
@@ -10,6 +11,11 @@ public class Server_or_Client : MonoBehaviour {
 
 	public Dropdown dd;
 	Text _text;
+
+	public void BackModeSelect(){
+
+		SceneManager.LoadScene ("mode_select");
+	}
 
 	// Use this for initialization
 	void Start () {

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 
-	// 加速度センサの値(仮想)
+	// ESPから送られてくる値(1:仰角,2:水平角)
 	private int _sensor1;
 	private int _sensor2;
 
@@ -27,16 +27,17 @@ public class GameManager : MonoBehaviour {
 	// 攻守交代のトリガー
 	public static bool change_trigger;
 
+	// 攻撃側の終了合図
 	public static bool end_atack;
-
-	// 振動発生のトリガー
-	public static bool vib_trigger;
 
 	// ゲーム終了の合図
 	public static bool end_game;
 
 	// カットイン用のオブジェクト
 	public GameObject cutin;
+
+	// 現在の攻守がどちらかを示すテキスト
+	public Text a_or_d;
 
 	public Text tx3;
 	public Text tx4;
@@ -79,12 +80,15 @@ public class GameManager : MonoBehaviour {
 	// ランダムで指定する角度を生成する
 	int GenerateTargetAngle(){
 
-		// -90度から90度までの間で乱数発生
+		// 0度から180度までの間で乱数発生
 		// [Todo]綺麗な数値の乱数を作れる関数あるかも
 		int rnd = Random.Range (0, 180);
 
 		// 適度な数値にマッピングし直す
 		int angle = RangeValueMapping (rnd);
+
+		// 答えの視覚化のために値を更新しておく
+		AnswerIce.answer = angle;
 
 		return angle;
 	}
@@ -161,7 +165,6 @@ public class GameManager : MonoBehaviour {
 		cutin.SetActive (false);
 		_sensor = new int[5];
 		count = 0;
-		vib_trigger = false;
 
 		// サーバかクライエントで先行後攻を決定
 		if (Server_or_Client.role == "server") {
@@ -183,6 +186,8 @@ public class GameManager : MonoBehaviour {
 
 			angle = 0;
 
+			a_or_d.text = "食べろ!!";
+
 			// 攻守交代
 			if (end_atack == true) {
 				// 順次実行で処理して欲しいのでコルーチンを使用
@@ -192,7 +197,9 @@ public class GameManager : MonoBehaviour {
 		}
 		// アイスを傾ける側のとき
 		else if (atack_or_defence == "defence") {
-			
+
+			a_or_d.text = "傾けろ!!";
+
 			// 指定の角度を生成
 			if(angle == 0){
 				angle = GenerateTargetAngle ();

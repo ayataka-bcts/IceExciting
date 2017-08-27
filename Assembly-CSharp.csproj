@@ -87,6 +87,7 @@
      <Compile Include="Assets\NCMB\Script\NamespaceDoc.cs" />
      <Compile Include="Assets\NCMB\Script\Platform.cs" />
      <Compile Include="Assets\NCMB\Script\SimpleJSON.cs" />
+     <Compile Include="Assets\Resources\Scripts\AnswerIce.cs" />
      <Compile Include="Assets\Resources\Scripts\BluetoothManager.cs" />
      <Compile Include="Assets\Resources\Scripts\CutinManager.cs" />
      <Compile Include="Assets\Resources\Scripts\GameManager.cs" />
@@ -94,9 +95,12 @@
      <Compile Include="Assets\Resources\Scripts\ResultManager.cs" />
      <Compile Include="Assets\Resources\Scripts\SceneTrans_mode.cs" />
      <Compile Include="Assets\Resources\Scripts\SceneTranser.cs" />
+     <Compile Include="Assets\Resources\Scripts\SensorVisualize.cs" />
      <Compile Include="Assets\Resources\Scripts\Server_or_Client.cs" />
      <Compile Include="Assets\Resources\Scripts\Solo\DebugManager.cs" />
      <Compile Include="Assets\Resources\Scripts\Solo\GameManager_solo.cs" />
+     <Compile Include="Assets\Resources\Scripts\StartAnim.cs" />
+     <Compile Include="Assets\Resources\Scripts\StartCall.cs" />
      <Compile Include="Assets\Resources\Scripts\VersusManager.cs" />
      <Compile Include="Assets\Resources\Scripts\mode_select.cs" />
      <Compile Include="Assets\Resources\Scripts\solo_managaer.cs" />

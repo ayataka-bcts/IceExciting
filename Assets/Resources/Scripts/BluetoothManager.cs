@@ -20,11 +20,12 @@ public class BluetoothManager: MonoBehaviour
 
 	// セットアップ関連のトリガー
 	bool init_set;
-	bool send_set;
+	static public bool send_set;
 
 	// ゲーム終了時の合図
 	public static bool end_ok;
 
+	// 攻守交代のトリガー
 	public static bool change_ok;
 
 	public GameObject cutin;
