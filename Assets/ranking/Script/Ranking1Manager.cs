@@ -82,48 +82,49 @@ public class Ranking1Manager : MonoBehaviour
 	// ランキングに登録する
     public void SaveRanking( string name, int score, UnityAction callback = null)
     {
-        //スコアがゼロなら登録しない//
-        if (CheckNCMBValid() == false || score <= 0)
-        {
-            if (callback != null) callback();
-            return;
-        }
+		//スコアがゼロなら登録しない//
+		if (CheckNCMBValid() == false || score <= 0)
+		{
+			if (callback != null) callback();
+			return;
+		}
 
-        //rankingClassNameに設定したオブジェクトを作る//
-        NCMBObject ncmbObject = new NCMBObject(rankingClassName);
+		NCMBObject currentObject = new NCMBObject(rankingClassName);
 
-        //nameが空だったらNoNameと入れる//
-        if (string.IsNullOrEmpty(name)) name = "No Name";
+		//現在のユーザー取得
+		NCMBUser currentUser = NCMBUser.CurrentUser;
+		name = currentUser.UserName;
 
-        // オブジェクトに値を設定
-        ncmbObject["Name"] = name;
-        ncmbObject["Score"] = score;
+		//ランキング内にcurrentUserと同名があるか
+		NCMBQuery<NCMBObject> query = new NCMBQuery<NCMBObject>(rankingClassName);
+		query.WhereEqualTo("Name", currentUser.UserName);
 
-        // データストアへの登録
-        ncmbObject.SaveAsync((NCMBException e) =>
-        {
-            if (e != null)
-            {
-                //接続失敗//
-            }
-            else
-            {
-                //接続成功//
-                //保存したオブジェクトidを記録//
-                currentObjectid = ncmbObject.ObjectId;
-            }
-
-            //ランキングの更新//
-            if (callback != null)
-            {
-                FetchRanking(callback);
-            }
-            else
-            {
-                FetchRanking();
-            }
-
-        });
+		NCMBObject ncmbObject = new NCMBObject(rankingClassName);
+		query.FindAsync((List<NCMBObject> objList, NCMBException e) => {
+			if (e == null)
+			{ // データの検索が成功したら、
+				if (objList.Count == 0)
+				{ // ハイスコアが未登録の場合
+					// オブジェクトに値を設定
+					ncmbObject["Name"] = name;
+					ncmbObject["Score"] = score;
+					ncmbObject.SaveAsync(); // セーブ
+				}
+				else
+				{ // ハイスコアが登録済みの場合
+					int cloudScore = System.Convert.ToInt32(objList[0]["Score"]); // クラウド上のスコアを取得
+					if (score > cloudScore)
+					{ // 今プレイしたスコアの方が高かったら、
+						objList[0]["Score"] = score; // それを新しいスコアとしてデータを更新
+						objList[0].SaveAsync(); // セーブ
+					}
+				}
+			}
+			else
+			{
+				//エラー処理
+			}
+		});
     }
 
     public List<Ranking1Data> GetRanking1()

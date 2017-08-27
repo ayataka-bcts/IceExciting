@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Resources/Scenes/Versus_setting.unity
+- path: Assets/Resources/Scenes/title.unity
   isLoaded: 1
   isActive: 1

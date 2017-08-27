@@ -12,8 +12,22 @@ public class Server_or_Client : MonoBehaviour {
 	public Dropdown dd;
 	Text _text;
 
+	public Animator am;
+
 	public void BackModeSelect(){
 
+		StartCoroutine (TransitionRanking ());
+	}
+
+	IEnumerator TransitionRanking(){
+
+		// シーン遷移のトリガーセット
+		am.SetTrigger ("trans");
+
+		// アニメーション終了待ち
+		yield return new WaitForSeconds (1.5f);
+
+		// シーンロード
 		SceneManager.LoadScene ("mode_select");
 	}
 

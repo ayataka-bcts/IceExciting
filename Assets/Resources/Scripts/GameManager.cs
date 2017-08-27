@@ -98,7 +98,11 @@ public class GameManager : MonoBehaviour {
 
 		// [要調整]いくつかの誤差を許容してもいいかも
 		if (sensor[0] == target && sensor[1] == target && sensor[2] == target && sensor[3] == target && sensor[4] == target) {
-			return true;
+			// 横の傾き以外を検知しないように、かつ左右のかたむけを検知できるように
+			if (-45 <= _sensor1 && _sensor1 < 45) {
+				return true;
+			} 
+			return false;
 		} else {
 			return false;
 		}
