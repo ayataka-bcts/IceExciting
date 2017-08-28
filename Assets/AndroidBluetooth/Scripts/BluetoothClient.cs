@@ -16,6 +16,7 @@ public class BluetoothClient : MonoBehaviour
 
 	public GameObject device_list;
 	public GameObject connect_button_client;
+	public GameObject versus;
 
     // Use this for initialization
     void Start()
@@ -69,8 +70,21 @@ public class BluetoothClient : MonoBehaviour
 
     }
 
-	public void Connecting(){
+	IEnumerator ConnectDevices(){
+
+		versus.GetComponent <Animator>().SetTrigger ("black");
+
+		yield return new WaitForSeconds (1.0f);
+
 		SceneManager.LoadScene ("versus");
+		
+	}
+
+	public void Connecting(){
+
+		UserManager.NameListLogIn (Server_or_Client.user_name);
+
+		StartCoroutine (ConnectDevices ());
 	}
 
     private void Update()

@@ -91,6 +91,8 @@
      <Compile Include="Assets\Resources\Scripts\BluetoothManager.cs" />
      <Compile Include="Assets\Resources\Scripts\CutinManager.cs" />
      <Compile Include="Assets\Resources\Scripts\GameManager.cs" />
+     <Compile Include="Assets\Resources\Scripts\MoveBackground.cs" />
+     <Compile Include="Assets\Resources\Scripts\Outline.cs" />
      <Compile Include="Assets\Resources\Scripts\RankingManager.cs" />
      <Compile Include="Assets\Resources\Scripts\ResultManager.cs" />
      <Compile Include="Assets\Resources\Scripts\SceneTrans_mode.cs" />
@@ -105,7 +107,6 @@
      <Compile Include="Assets\Resources\Scripts\mode_select.cs" />
      <Compile Include="Assets\Resources\Scripts\solo_managaer.cs" />
      <Compile Include="Assets\Resources\Scripts\title.cs" />
-     <Compile Include="Assets\ranking\Script\GameMode1.cs" />
      <Compile Include="Assets\ranking\Script\GameMode2.cs" />
      <Compile Include="Assets\ranking\Script\MenuManager.cs" />
      <Compile Include="Assets\ranking\Script\PushButton.cs" />

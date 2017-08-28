@@ -83,7 +83,7 @@ public class Ranking1Manager : MonoBehaviour
     public void SaveRanking( string name, int score, UnityAction callback = null)
     {
 		//スコアがゼロなら登録しない//
-		if (CheckNCMBValid() == false || score <= 0)
+		if (CheckNCMBValid() == false)
 		{
 			if (callback != null) callback();
 			return;
@@ -107,17 +107,17 @@ public class Ranking1Manager : MonoBehaviour
 				{ // ハイスコアが未登録の場合
 					// オブジェクトに値を設定
 					ncmbObject["Name"] = name;
-					ncmbObject["Score"] = score;
+					ncmbObject["Score"] = 1;
 					ncmbObject.SaveAsync(); // セーブ
 				}
 				else
 				{ // ハイスコアが登録済みの場合
-					int cloudScore = System.Convert.ToInt32(objList[0]["Score"]); // クラウド上のスコアを取得
-					if (score > cloudScore)
-					{ // 今プレイしたスコアの方が高かったら、
+//					int cloudScore = System.Convert.ToInt32(objList[0]["Score"]); // クラウド上のスコアを取得
+//					if (score > cloudScore)
+//					{ // 今プレイしたスコアの方が高かったら、
 						objList[0]["Score"] = score; // それを新しいスコアとしてデータを更新
 						objList[0].SaveAsync(); // セーブ
-					}
+//					}
 				}
 			}
 			else

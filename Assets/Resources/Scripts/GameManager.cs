@@ -185,48 +185,50 @@ public class GameManager : MonoBehaviour {
 		tx3.text = "1:" + _sensor1.ToString () + " 2:" + _sensor2.ToString ();
 		tx4.text = atack_or_defence;
 
-		// アイスを食べる側のとき
-		if (atack_or_defence == "atack") {
+		if (StartCall._flag == true) {
+			// アイスを食べる側のとき
+			if (atack_or_defence == "atack") {
 
-			angle = 0;
+				angle = 0;
 
-			a_or_d.text = "食べろ!!";
+				a_or_d.text = "食べろ!!";
 
-			// 攻守交代
-			if (end_atack == true) {
-				// 順次実行で処理して欲しいのでコルーチンを使用
-				StartCoroutine (ChangeAnimation ());
-				change_trigger = true;
+				// 攻守交代
+				if (end_atack == true) {
+					// 順次実行で処理して欲しいのでコルーチンを使用
+					StartCoroutine (ChangeAnimation ());
+					change_trigger = true;
+				}
 			}
-		}
-		// アイスを傾ける側のとき
-		else if (atack_or_defence == "defence") {
+			// アイスを傾ける側のとき
+			else if (atack_or_defence == "defence") {
 
-			a_or_d.text = "傾けろ!!";
+				a_or_d.text = "傾けろ!!";
 
-			// 指定の角度を生成
-			if(angle == 0){
-				angle = GenerateTargetAngle ();
-				GameObject.Find ("debug_2").GetComponent <Text> ().text = "angle:" + angle.ToString ();
-			}
+				// 指定の角度を生成
+				if (angle == 0) {
+					angle = GenerateTargetAngle ();
+					GameObject.Find ("debug_2").GetComponent <Text> ().text = "angle:" + angle.ToString ();
+				}
 
-			// 加速度計の値を取得
-			GetAccele (BluetoothManager._fromDevice);
+				// 加速度計の値を取得
+				GetAccele (BluetoothManager._fromDevice);
 
-			// 値の判定
-			if(CheckAngle (_sensor, angle)){
+				// 値の判定
+				if (CheckAngle (_sensor, angle)) {
 				
-				// 順次実行で処理して欲しいのでコルーチンを使用
-				StartCoroutine (ChangeAnimation ());
-				change_trigger = true;
+					// 順次実行で処理して欲しいのでコルーチンを使用
+					StartCoroutine (ChangeAnimation ());
+					change_trigger = true;
+				}
+
 			}
 
-		}
-
-		// 通信によってゲームの終了を知ったら
-		if (BluetoothManager.end_ok == true) {
-			SceneManager.LoadScene ("result");
-			loser = Server_or_Client.role;
+			// 通信によってゲームの終了を知ったら
+			if (BluetoothManager.end_ok == true) {
+				SceneManager.LoadScene ("result");
+				loser = Server_or_Client.role;
+			}
 		}
 			
 	}

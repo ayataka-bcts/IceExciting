@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class ResultManager : MonoBehaviour {
 
 	public GameObject win;
 	public GameObject lose;
+
+	public Text _name;
 
 	// タイトルシーンへ遷移
 	public void BackTitle(){
@@ -17,6 +20,8 @@ public class ResultManager : MonoBehaviour {
 	void Start () {
 		win.SetActive (false);
 		lose.SetActive (false);
+
+		_name.text = Server_or_Client.user_name;
 	}
 	
 	// Update is called once per frame

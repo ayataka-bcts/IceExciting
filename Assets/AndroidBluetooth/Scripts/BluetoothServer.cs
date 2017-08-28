@@ -14,6 +14,7 @@ public class BluetoothServer : MonoBehaviour
 	public Text debug_status;
 
 	public GameObject connect_button_server;
+	public GameObject versus;
 
 	// Use this for initialization
 	void Start()
@@ -36,10 +37,21 @@ public class BluetoothServer : MonoBehaviour
 		//btServer.Call ("runAsServer");
 	}
 
-	// セット完了として次のシーンへ
-	public void Connecting(){
+	IEnumerator ConnectDevices(){
+
+		versus.GetComponent <Animator>().SetTrigger ("black");
+
+		yield return new WaitForSeconds (1.0f);
 
 		SceneManager.LoadScene ("versus");
+
+	}
+
+	public void Connecting(){
+
+		UserManager.NameListLogIn (Server_or_Client.user_name);
+
+		StartCoroutine (ConnectDevices ());
 	}
 
     //コールバック

@@ -51,19 +51,19 @@ public class UserManager : MonoBehaviour {
 	}
 
 	//受け取った名前でログインする　パスワードは”a”固定
-	public void NameListLogIn(string name)
+	public static void NameListLogIn(string name)
 	{
 		// ユーザー名とパスワードでログイン
 		NCMBUser.LogInAsync(name, "a", (NCMBException e) => {
 			if (e != null)
 			{
-				UnityEngine.Debug.Log("ログインに失敗: " + e.ErrorMessage);
-				errorText.GetComponent<Text>().text = e.ErrorMessage;
+				//UnityEngine.Debug.Log("ログインに失敗: " + e.ErrorMessage);
+				//errorText.GetComponent<Text>().text = e.ErrorMessage;
 			}
 			else
 			{
-				UnityEngine.Debug.Log("ログインに成功！");
-				SceneManager.LoadScene("MenuScene");
+				//UnityEngine.Debug.Log("ログインに成功！");
+				//SceneManager.LoadScene("MenuScene");
 			}
 		});
 	}
