@@ -50,6 +50,7 @@
      <Compile Include="Assets\AndroidBluetooth\Scripts\BluetoothDevice.cs" />
      <Compile Include="Assets\AndroidBluetooth\Scripts\BluetoothServer.cs" />
      <Compile Include="Assets\AndroidBluetooth\Scripts\DebugWindow.cs" />
+     <Compile Include="Assets\MenuBGM.cs" />
      <Compile Include="Assets\NCMB\NCMBManager.cs" />
      <Compile Include="Assets\NCMB\NCMBSettings.cs" />
      <Compile Include="Assets\NCMB\Script\CommonConstant.cs" />
@@ -95,6 +96,7 @@
      <Compile Include="Assets\Resources\Scripts\Outline.cs" />
      <Compile Include="Assets\Resources\Scripts\RankingManager.cs" />
      <Compile Include="Assets\Resources\Scripts\ResultManager.cs" />
+     <Compile Include="Assets\Resources\Scripts\SEManager.cs" />
      <Compile Include="Assets\Resources\Scripts\SceneTrans_mode.cs" />
      <Compile Include="Assets\Resources\Scripts\SceneTranser.cs" />
      <Compile Include="Assets\Resources\Scripts\SensorVisualize.cs" />

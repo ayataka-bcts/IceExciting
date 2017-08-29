@@ -182,8 +182,8 @@ public class GameManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		tx3.text = "1:" + _sensor1.ToString () + " 2:" + _sensor2.ToString ();
-		tx4.text = atack_or_defence;
+		//tx3.text = "1:" + _sensor1.ToString () + " 2:" + _sensor2.ToString ();
+		//tx4.text = atack_or_defence;
 
 		if (StartCall._flag == true) {
 			// アイスを食べる側のとき

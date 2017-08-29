@@ -59,7 +59,8 @@ public class BluetoothManager: MonoBehaviour
 		btDevice.Call("setBtUuid", "00001101-0000-1000-8000-00805F9B34FB");//UUIDを、デバイスで設定したものと共通のものに変更
 
 		//【EDITED!!】サーバデバイスと接続
-		btDevice.Call("runAsClient", "ICE EXCITING!");//サーバのデバイスを指定して接続
+		btDevice.Call("runAsClient", "EXCITING ORANGE");//サーバのデバイスを指定して接続
+		//btDevice.Call("runAsClient", "ICE BLUE");//サーバのデバイスを指定して接続
 	}
 
 	// 端末間同士とデバイス接続のセットアップ
@@ -140,7 +141,7 @@ public class BluetoothManager: MonoBehaviour
 	// 端末間同士通信でのメッセージ受信時
 	void received(string message){
 
-		GameObject.Find ("debug").GetComponent <Text> ().text = "rec:" + message; 
+		//GameObject.Find ("debug").GetComponent <Text> ().text = "rec:" + message; 
 
 		// 接続完了したかどうか「ok」を含むかどうかを判定
 		if (message.Contains ("ok")) {

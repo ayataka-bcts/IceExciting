@@ -18,9 +18,13 @@ public class BluetoothClient : MonoBehaviour
 	public GameObject connect_button_client;
 	public GameObject versus;
 
+	AudioSource _audio;
+
     // Use this for initialization
     void Start()
     {
+		_audio = this.gameObject.GetComponent <AudioSource> ();
+
 		device_list.SetActive (false);
 		connect_button_client.SetActive (false);
     }
@@ -44,6 +48,12 @@ public class BluetoothClient : MonoBehaviour
 
     public void init()
     {
+		_audio.PlayOneShot (_audio.clip);
+
+		if (GameObject.Find ("Connect_ser").activeSelf == true) {
+			GameObject.Find ("Connect_ser").SetActive (false);
+		}
+
 		//プラグイン取得、受信時のコールバック関数設定
 		btClient = new AndroidJavaObject("com.example.somen.androidbtspp_split.btspp", this.gameObject.name, "received", "client");
 
@@ -81,6 +91,10 @@ public class BluetoothClient : MonoBehaviour
 	}
 
 	public void Connecting(){
+
+		_audio.PlayOneShot (_audio.clip);
+
+		MenuBGM.DontDestroyEnabled = false;
 
 		UserManager.NameListLogIn (Server_or_Client.user_name);
 

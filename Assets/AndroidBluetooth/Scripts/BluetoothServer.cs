@@ -16,14 +16,20 @@ public class BluetoothServer : MonoBehaviour
 	public GameObject connect_button_server;
 	public GameObject versus;
 
+	AudioSource _audio;
+
 	// Use this for initialization
 	void Start()
 	{
 		connect_button_server.SetActive (false);
+
+		_audio = this.gameObject.GetComponent <AudioSource> ();
 	}
 
 	public void init()
 	{
+		_audio.PlayOneShot (_audio.clip);
+
 		//プラグイン取得、受信時のコールバック関数設定
 		//btServe= new AndroidJavaObject("com.example.somen.androidbtspp_split.btspp", this.gameObject.name, "received", "server");
 
@@ -48,6 +54,10 @@ public class BluetoothServer : MonoBehaviour
 	}
 
 	public void Connecting(){
+
+		_audio.PlayOneShot (_audio.clip);
+
+		MenuBGM.DontDestroyEnabled = false;
 
 		UserManager.NameListLogIn (Server_or_Client.user_name);
 

@@ -7,8 +7,11 @@ public class title : MonoBehaviour {
 
 	GameObject loading;
 	Animator am;
+	AudioSource _audio;
 
 	IEnumerator TransitionTitle(){
+
+		_audio.PlayOneShot (_audio.clip);
 
 		// シーン遷移のトリガーセット
 		am.SetTrigger ("trans");
@@ -25,6 +28,8 @@ public class title : MonoBehaviour {
 		loading = GameObject.Find ("SceneTrans_02");
 		//loading.SetActive (false);
 		am = loading.GetComponent <Animator>();
+
+		_audio = this.gameObject.GetComponent <AudioSource> ();
 	}
 	
 	// Update is called once per frame

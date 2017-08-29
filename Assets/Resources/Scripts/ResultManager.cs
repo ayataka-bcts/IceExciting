@@ -11,8 +11,15 @@ public class ResultManager : MonoBehaviour {
 
 	public Text _name;
 
+	public Ranking1Manager rm;
+
+	AudioSource _audio;
+
 	// タイトルシーンへ遷移
 	public void BackTitle(){
+
+		_audio.PlayOneShot (_audio.clip);
+
 		SceneManager.LoadScene ("mode_select");
 	}
 
@@ -22,6 +29,7 @@ public class ResultManager : MonoBehaviour {
 		lose.SetActive (false);
 
 		_name.text = Server_or_Client.user_name;
+		_audio = this.gameObject.GetComponent <AudioSource> ();
 	}
 	
 	// Update is called once per frame
@@ -30,6 +38,7 @@ public class ResultManager : MonoBehaviour {
 		// 勝者の場合
 		if (GameManager.winner == Server_or_Client.role) {
 			win.SetActive (true);
+			//rm.SaveRanking (Server_or_Client.user_name, 1);
 		}
 		// 敗者の場合
 		else if (GameManager.loser == Server_or_Client.role) {

@@ -7,12 +7,15 @@ public class mode_select : MonoBehaviour {
 
 	Animator scene_trans_title;
 	Animator scene_trans_ranking;
+	AudioSource _audio;
 
 	// Use this for initialization
 	void Start () {
 		scene_trans_title = GameObject.Find ("SceneTrans_02").GetComponent <Animator> ();
 		scene_trans_ranking = GameObject.Find ("SceneTrans_ranking").GetComponent <Animator> ();
 		scene_trans_title.Play ("transition");
+
+		_audio = this.gameObject.GetComponent <AudioSource> ();
 	}
 	
 	// Update is called once per frame
@@ -38,6 +41,8 @@ public class mode_select : MonoBehaviour {
 	}
 
 	IEnumerator TransitionModeSelect(string mode){
+
+		_audio.PlayOneShot (_audio.clip);
 
 		// シーン遷移のトリガーセット
 		scene_trans_ranking.SetTrigger ("trans");
