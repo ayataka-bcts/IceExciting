@@ -42,6 +42,7 @@ public class GameManager : MonoBehaviour {
 	public Text tx3;
 	public Text tx4;
 
+
 	// 乱数をある程度綺麗な数値に整える
 	int RangeValueMapping(int value){
 

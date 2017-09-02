@@ -34,9 +34,11 @@ public class mode_select : MonoBehaviour {
 			StartCoroutine (TransitionModeSelect (mode));
 		}
 
-		if (mode == "Versus_setting") {
+		if (mode == "Versus_setting" || mode == "Solo") {
 			StartCoroutine(TransitionModeSelect (mode));
 		}
+
+
 			
 	}
 

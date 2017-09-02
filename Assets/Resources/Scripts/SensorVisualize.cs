@@ -24,10 +24,11 @@ public class SensorVisualize : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (GameManager.atack_or_defence == "defence") {
+		
+		if (solo_managaer._OnStart == true) {
 			
 			// 加速度計の値を取得
-			GetAccele (BluetoothManager._fromDevice);
+			GetAccele (BluetoothManager_solo._fromDevice);
 
 			// 横の傾き以外を検知しないように、かつ左右のかたむけを検知できるように
 			if (-45 <= _sensor1 && _sensor1 < 45) {
