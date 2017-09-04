@@ -9,6 +9,7 @@ public class MenuBGM : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+
 		if (DontDestroyEnabled) {
 			// Sceneを遷移してもオブジェクトが消えないようにする
 			DontDestroyOnLoad (this);

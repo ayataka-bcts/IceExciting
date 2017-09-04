@@ -75,8 +75,6 @@ public class solo_managaer : MonoBehaviour {
 			time_text.text = time.Minutes.ToString("D2") + ":" + 
 				time.Seconds.ToString("D2") + "." + time.Milliseconds.ToString("D3");
 
-			texd.text = status.ToString ();
-
 			if (status == "perform") {
 
 				// 指定の角度を生成
@@ -103,13 +101,17 @@ public class solo_managaer : MonoBehaviour {
 				if (eat_trigger == false) {
 					diff = time.Seconds - pre_time;
 
+					pre_time = time.Seconds;
+
 					eat_trigger = true;
+
+
+
+					//GameObjectを生成、生成したオブジェクトを変数に代入
+					GameObject prefab = (GameObject)Instantiate (eat_timer);
 
 					// 食べられる時間のセット
 					TastingTimer.eat_time = EvaluateEating (diff);
-
-					//GameObjectを生成、生成したオブジェクトを変数に代入
-					GameObject prefab = (GameObject)Instantiate (eat_timer); 
 
 					//Canvasの子要素として登録する 
 					prefab.transform.SetParent (canvasObject.transform, false);
@@ -159,9 +161,9 @@ public class solo_managaer : MonoBehaviour {
 	float EvaluateEating(int time){
 
 		// 時間に応じて食べられる時間を設定
-		if (0 < time && time <= 2) {
-			return 0.001f;
-		} else if (2 < time && time <= 5) {
+		if (0 < time && time <= 4) {
+			return 0.0025f;
+		} else if (4 < time && time <= 7) {
 			return 0.005f;
 		} else {
 			return 0.01f;
@@ -173,7 +175,7 @@ public class solo_managaer : MonoBehaviour {
 
 		if (0 < value) {
 			if (0 < value && value < 15) {
-				value = 0;
+				value = 15;
 			} else if (15 < value && value < 30) {
 				value = 30;
 			} else if (30 < value && value < 45) {
@@ -237,8 +239,13 @@ public class solo_managaer : MonoBehaviour {
 	// フィニッシュボタンを押した時
 	public void FinishSolo(){
 
+		ResultManager_solo.score = sw.Elapsed.Minutes.ToString("D2") + ":" + 
+			sw.Elapsed.Seconds.ToString("D2") + "." + sw.Elapsed.Milliseconds.ToString("D3");
+
 		// 計測終了
 		sw.Stop();
+
+		SceneManager.LoadScene ("result_solo");
 
 	}
 

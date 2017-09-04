@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Resources/Scenes/Solo.unity
+- path: Assets/Resources/Scenes/mode_select.unity
   isLoaded: 1
   isActive: 1

@@ -97,6 +97,7 @@
      <Compile Include="Assets\Resources\Scripts\Outline.cs" />
      <Compile Include="Assets\Resources\Scripts\RankingManager.cs" />
      <Compile Include="Assets\Resources\Scripts\ResultManager.cs" />
+     <Compile Include="Assets\Resources\Scripts\ResultManager_solo.cs" />
      <Compile Include="Assets\Resources\Scripts\SEManager.cs" />
      <Compile Include="Assets\Resources\Scripts\SceneTrans_mode.cs" />
      <Compile Include="Assets\Resources\Scripts\SceneTranser.cs" />
